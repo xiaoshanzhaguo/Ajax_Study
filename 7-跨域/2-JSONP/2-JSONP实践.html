@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jsonp案例</title>
+</head>
+<body>
+    用户名：<input type="text" id="username">
+    <p></p>
+    <script>
+        //获取input元素
+        const input = document.querySelector('input');
+        const p = document.querySelector('p');
+
+        //声明 handle 函数
+        function handle(data) {
+            input.style.border = "solid 1px #f00";  //设置input输入框的颜色
+            p.innerHTML = data.msg;
+        }
+
+        //绑定事件（失去焦点时）
+        input.onblur = function() {
+            //获取用户的输入值
+            let username = this.value; //form元素获取输入值的API属性，通过它可以获得我们的输入值
+            //向服务端发送请求，检测用户名是否存在
+            //1.创建script标签
+            const script = document.createElement('script');
+            //2.设置标签的src属性（给谁发）
+            script.src = 'http://127.0.0.1:8000/check-username';
+            //3.将script插入到文档中，不插入文档中的话，是无法向服务端发请求的。（做一个节点的插入——将script标签插入到body标签的最后面）
+            document.body.appendChild(script);
+        }
+    </script>
+</body>
+</html>
